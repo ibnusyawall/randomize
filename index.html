@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Simple Randomize</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row mt-3 ml-3">
+            <h3>Randomize</h3>
+        </div>
+        <div class="row mt-3 ml-3">
+            <div class="card">
+                <p class="card-header text-center text-capitalize"> true random number generator </p>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Min:</span>
+                        </div>
+                        <input type="number" id="inputMin" class="form-control" value="1" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Max:</span>
+                        </div> 
+                        <input type="number" id="inputMax" class="form-control" value="100" aria-describedby="basic-addon1">
+                    </div>
+                    <button type="button" id="generate" class="btn btn-outline-secondary">Generate</button>
+                    <button type="button" id="reset" class="btn btn-outline-secondary">Reset</button>
+                </div>
+                <div class="card-footer text-center">
+                    <h5 id="result"><h5>
+                    <p id="desc" class="font-weight-light"></p>
+                    <p id="date" class="font-weight-light"></p>
+                    <p class="text-right"><small>Powered by @isywl_</small></p>
+                </div>
+            </div>           
+        </div>
+        <footer class="footer">
+        </footer>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js" integrity="sha512-rjmacQUGnwQ4OAAt3MoAmWDQIuswESNZwYcKC8nmdCIxAVkRC/Lk2ta2CWGgCZyS+FfBWPgaO01LvgwU/BX50Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+            $('.card-footer').hide()
+
+            $('#generate').on('click', function() {
+                let min = $('#inputMin').val() || 1
+                let max = $('#inputMax').val() || 100
+
+                let date = moment().tz('Asia/Jakarta').format('YYYY-MM-DD HH:mm:ss z')
+ 
+                $('.card-footer').show()
+
+                $('#result').html(`<b>${randomInt(parseInt(min), parseInt(max))}</b>`)
+                $('#desc').text(`Min: ${min}, Max: ${max}`)
+                $('#date').text(date)
+            })            
+
+            $('#reset').on('click', function() {
+                $('.card-footer').hide()
+                $('#inputMin').val('1')
+                $('#inputMax').val('100')
+            })
+
+            function randomInt(min_, max_) {
+                let rand;
+                if (!min_) rand = Array(max_).fill().map((_, index) => index += 1)[~~(Math.random() * max_)]
+                rand = Array(max_).fill().map((_, index) => index += 1).slice(min_-1)[~~(Math.random() * max_)]
+                if (!rand) return randomInt(min_, max_)
+                return rand
+            } 
+        })
+    </script>
+  </body>
+</html>
